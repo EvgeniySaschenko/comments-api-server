@@ -30,7 +30,7 @@ router.get('/', async (req, res, next)=> {
 router.post('/', upload.array('file'), async (req, res, next)=> {
   let comments = new Comments();
   let { parentId, text } = req.body;
-  let { id } = JSON.parse(req.cookies.user);
+  let { id } = JSON.parse(req.cookies.user || '{}');
 
   comments.addComment({ userId: id, parentId, text, files: req.files}).then((rerust)=>{ 
     if (!rerust.error) {
@@ -45,7 +45,7 @@ router.post('/', upload.array('file'), async (req, res, next)=> {
 router.put('/', upload.array('file'), async (req, res, next)=> {
   let comments = new Comments();
   let { commentId, uploadedFiles, text } = req.body;
-  let { id } = JSON.parse(req.cookies.user);
+  let { id } = JSON.parse(req.cookies.user || '{}');
 
   comments.updateComment({commentId, userId: id, text, uploadedFiles, files: req.files}).then((rerust)=>{
     if (!rerust.error) {
@@ -73,7 +73,7 @@ router.delete('/', upload.array('file'), async (req, res, next)=> {
 router.post('/vote/', upload.none(), async (req, res, next)=> {
   let comments = new Comments();
   let { commentId, voteValue } = req.body;
-  let { id } = JSON.parse(req.cookies.user);
+  let { id } = JSON.parse(req.cookies.user || '{}');
 
   comments.processVote({userId: id, commentId, voteValue})
   .then((rerust)=>{ 
