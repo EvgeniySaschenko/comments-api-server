@@ -6,9 +6,9 @@ let config = {
     secret: "dafafqek54mk45k45kl"
   },
   production: {
-    port: 8888,
-    baseUrlImg: 'https://vue-comments-server.herokuapp.com:8888/images',
-    baseUrl: 'https://vue-comments-server.herokuapp.com:8888/',
+    port: 80,
+    baseUrlImg: 'https://vue-comments-server.herokuapp.com/images',
+    baseUrl: 'https://vue-comments-server.herokuapp.com/',
     secret: "dafafqek54mk45k45kl"
   },
 }
