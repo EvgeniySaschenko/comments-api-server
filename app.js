@@ -1,12 +1,13 @@
 global.__APPROOT= require('app-root-path');
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var app = express();
-var cors = require('cors');
-const os = require('os');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let app = express();
+let cors = require('cors');
+let os = require('os');
+let process = require('process');
 
 app.use(cors());
 
@@ -38,6 +39,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+
+process.on('uncaughtException', (err, origin) => {
+  console.log(err)
 });
 
 module.exports = app;

@@ -66,7 +66,7 @@ class Comments {
       uploadedFiles = JSON.parse(uploadedFiles);
       let filesInfo = this.preparationFilesInfoUpdate(files, uploadedFiles);
       let dateUpdate = parseInt(Date.now() / 1000);
-      let startNumFiles = uploadedFiles.length ? uploadedFiles.length - 1 : 0;
+      let startNumFiles = uploadedFiles.length ? uploadedFiles.length : 0;
       await this.copuFiles(files, commentId, startNumFiles);
 
       let smtp = db.prepare("UPDATE comment SET userIdEdit = ?, text = ?, files = ?, dateUpdate = ? WHERE id = ?");
@@ -410,6 +410,7 @@ class Comments {
         itemsDelete.push(item.src.replace(config.baseUrl, ''));
       }
     }
+
     return {
       items: [...filesInfo, ...this.preparationFilesInfo(files, uploadedFiles.length)],
       itemsDelete 
