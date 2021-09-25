@@ -7,8 +7,8 @@ let config = {
   },
   production: {
     port: process.env.PORT,
-    baseUrlImg: 'https://vue-comments-server.herokuapp.com/images',
-    baseUrl: 'https://vue-comments-server.herokuapp.com/',
+    baseUrlImg: 'https://vue-comments-api-server.herokuapp.com/images',
+    baseUrl: 'https://vue-comments-api-server.herokuapp.com/',
     secret: "dafafqek54mk45k45kl"
   },
 }

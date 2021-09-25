@@ -30,7 +30,7 @@ router.get('/', async (req, res, next)=> {
 router.post('/', upload.array('file'), async (req, res, next)=> {
   let comments = new Comments();
   let { parentId, text } = req.body;
-  let { id } = JSON.parse(req.cookies.user || '{}');
+  let { id } = JSON.parse(req.cookies.user);
 
   comments.addComment({ userId: id, parentId, text, files: req.files}).then((rerust)=>{ 
     if (!rerust.error) {
