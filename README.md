@@ -10,17 +10,17 @@ For a local demonstration, you need to run 2 servers, the server from which you 
 
 #### Server Back-End
 
-###### Download repository
+##### Download repository
 ```bash
 git clone https://github.com/EvgeniySaschenko/comments-api-server.git
 ```
 
-###### Install dependencies
+##### Install dependencies
 ```bash
 npm install
 ```
 
-###### Run server
+##### Run server
 ```bash
 npm run dev
 ```
@@ -29,17 +29,17 @@ The server will be available at: http://localhost:8888/
 
 #### Server Front-End
 
-###### Download repository
+##### Download repository
 ```bash
 git clone https://github.com/EvgeniySaschenko/vue-comments.git
 ```
 
-###### Install dependencies
+##### Install dependencies
 ```bash
 npm install
 ```
 
-###### Run server
+##### Run server
 ```bash
 npm run dev
 ```
