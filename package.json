@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=develop nodemon ./bin/www",
-    "start":  "cross-env NODE_ENV=production node ./bin/www"
+    "start": "cross-env NODE_ENV=production node ./bin/www"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
@@ -26,5 +26,8 @@
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2",
     "striptags": "^3.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
   }
 }

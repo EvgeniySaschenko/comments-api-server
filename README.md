@@ -49,10 +49,9 @@ The server will be available at: http://localhost:8080/
 
 ## Example response
 
+- Backend transfers 2 objects `items` (**list of comments**)  and `mapItems` (**describes the hierarchy of the comment tree**) where comments id are used as keys.
 
-- От бекенда нам необходимо получить 2 объекта `items` и `mapItems` - где ключами являются id комментариев:
-
-#### items - список комментаририев
+#### items
 ```
   {
     1549 : {
@@ -88,29 +87,29 @@ The server will be available at: http://localhost:8080/
   }
 ```
 
-#### items - список комментаририев
 | Parameter | Type | Value | Description |
-| --- | :---: | :---: | --- |
-| dateCreate | `Number` | timestamp | дата создания |
-| dateUpdate | `Number` | 0 / timestamp | дата редактирования |
-| dislike | `Number` | <= 0 | количество дизлайков |
-| like | `Number` | <= 0 | количество лайков |
-| voteValue | `Number` | 0 - не голосовал, <br> 1 - like, <br> -1 - dislike | пользователь поставил лайк, дизлайк или  не голосовал |
-| files | `Array` | [] - нет файлов,<br> ["ссылка на файл 1", "ссылка на файл 2"] - есть файлы | список файлов |
-| id | `Number` / `String` | Number / String |  уникальный индификатор комментирия |
-| isManageDelete | `Boolean` | true / false | указывает на то что данный пользователь имеет право удалить комментирий |
-| isManageEdit | `Boolean` | true / false | указывает на то что данный пользователь имеет право редактировать комментирий |
-| parentId | `Number` / `String` | Number / String | индификатор предка (id комментария на который ответили) |
-| text | `String` | String | текст комментария |
-| userImg | `String` | String | изображение автора комментария |
-| userName | `String` | String | имя автора комментария |
+| --- | :---: | --- | --- |
+| dateCreate | `Number` | timestamp | Date of creation |
+| dateUpdate | `Number` | 0 / timestamp | Date of editing |
+| dislike | `Number` | <= 0 | Number of dislikes |
+| like | `Number` | <= 0 | Number of likes |
+| voteValue | `Number` | 0 - did not vote, <br> 1 - like, <br> -1 - dislike | The current user has liked, disliked or did not vote |
+| files | `Array` | [] - no files,<br> ["file link 1", "file link 2"] - there are files | list of files |
+| id | `Number` / `String` | Number / String | Unique comment identifier |
+| isManageDelete | `Boolean` | true / false | Indicates that the current user has the right to delete the comment|
+| isManageEdit | `Boolean` | true / false | Indicates that the current user has the right to edit the comment |
+| parentId | `Number` / `String` | Number / String | Ancestor id (id of the comment responded to). **To control the nesting depth of the tree, the server can specify the identifier of another comment** |
+| text | `String` | String | Comment text |
+| userImg | `String` | String | Comment author's image |
+| userName | `String` | String | Comment author name |
 
-#### mapItems - описывает иерархию дерева (вложенность и последовательность) и количество комменрариев
 
-**mapItems - описывает иерархию дерева (вложенность и последовательность) и количество комменрариев
-
-```json
-{
-
-}
+#### mapItems
 ```
+  {
+    1549 : {items: [1550], quantity: 1},
+    1550 : {{items: [], quantity: 0}
+  }
+```
+
+
