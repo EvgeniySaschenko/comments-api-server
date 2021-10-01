@@ -93,8 +93,8 @@ The server will be available at: http://localhost:8080/
 | dateUpdate | `Number` | 0 / timestamp | Date of editing |
 | dislike | `Number` | <= 0 | Number of dislikes |
 | like | `Number` | <= 0 | Number of likes |
-| voteValue | `Number` | 0 - did not vote, <br> 1 - like, <br> -1 - dislike | The current user has liked, disliked or did not vote |
-| files | `Array` | [] - no files,<br> ["file link 1", "file link 2"] - there are files | list of files |
+| voteValue | `Number` | 0 - **did not vote**, <br> 1 - **like**, <br> -1 - **dislike** | The current user has liked, disliked or did not vote |
+| files | `Array` | [] - **no files**,<br> ["file link 1", "file link 2"] - **there are files** | list of files |
 | id | `Number` / `String` | Number / String | Unique comment identifier |
 | isManageDelete | `Boolean` | true / false | Indicates that the current user has the right to delete the comment|
 | isManageEdit | `Boolean` | true / false | Indicates that the current user has the right to edit the comment |
