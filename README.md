@@ -49,9 +49,9 @@ The server will be available at: http://localhost:8080/
 
 ## Example response
 
-Backend transfers 2 objects<br>
-**items** - list of comments<br>
-**mapItems** - describes the hierarchy of the comment tree<br>
+Backend transfers 2 objects:<br>
+`items` - list of comments.<br>
+`mapItems` - describes the hierarchy of the comment tree.<br>
 In these objects from comments are keys.
 
 #### items
@@ -110,9 +110,13 @@ In these objects from comments are keys.
 #### mapItems
 ```js
   {
-    1549 : {items: [1550], quantity: 1},
-    1550 : {{items: [], quantity: 0}
+    1549 : { items: [1550], quantity: 1 },
+    1550 : { items: [], quantity: 0 }
   }
 ```
 
+| Parameter | Type | Value | Description |
+| --- | :---: | --- | --- |
+| items | `Array` | [] | This field contains the ID of comments that are direct descendants, only those IDs whose comments are passed in this request to the client are indicated here. Comments will be displayed in the same order as specified in the array. |
+| quantity | `Number` | Number | The total number of comments for this ancestor. |
 
