@@ -49,9 +49,9 @@ The server will be available at: http://localhost:8080/
 
 ## Example response
 
-Backend transfers 2 objects 
-`items` (**list of comments**)<br>
-`mapItems` (**describes the hierarchy of the comment tree**)<br>
+Backend transfers 2 objects<br>
+**items** - list of comments<br>
+**mapItems** - describes the hierarchy of the comment tree<br>
 Where comments id are used as keys.
 
 #### items
