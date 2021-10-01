@@ -1,4 +1,56 @@
-## Example Back-End
+# comments-api-server
+
+## Description
+
+> This server is intended for informational purposes only, you do not need to use it in production, since it is not protected from hacking in any way and may contain errors.
+
+## Install & run
+
+For a local demonstration, you need to run 2 servers, the server from which you will receive data, and the server that will display the page
+
+#### Server data api 
+
+**Download repository**
+```bash
+git clone https://github.com/EvgeniySaschenko/comments-api-server.git
+```
+
+**Install dependencies**
+```bash
+npm install
+```
+
+**Run server**
+```bash
+npm run dev
+```
+
+The server will be available at: http://localhost:8888/
+
+#### Server Front-End
+
+**Download repository**
+```bash
+git clone https://github.com/EvgeniySaschenko/vue-comments.git
+```
+
+**Install dependencies**
+```bash
+npm install
+```
+
+**Run server**
+```bash
+npm run dev
+```
+
+The server will be available at: http://localhost:8080/
+
+
+
+
+## Example
+
 
 - От бекенда нам необходимо получить 2 объекта `items` и `mapItems` - где ключами являются id комментариев:
 
@@ -10,7 +62,7 @@
       dateUpdate: 1632329889,
       dislike: 0,
       like: 0,
-      voteValue: 0
+      voteValue: 0,
       files: [],
       id: 1549,
       isManageDelete: false,
