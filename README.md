@@ -52,7 +52,7 @@ The server will be available at: http://localhost:8080/
 Backend transfers 2 objects<br>
 **items** - list of comments<br>
 **mapItems** - describes the hierarchy of the comment tree<br>
-Where comments id are used as keys.
+In these objects from comments are keys.
 
 #### items
 ```js
