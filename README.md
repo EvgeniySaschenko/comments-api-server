@@ -49,10 +49,13 @@ The server will be available at: http://localhost:8080/
 
 ## Example response
 
-- Backend transfers 2 objects `items` (**list of comments**)  and `mapItems` (**describes the hierarchy of the comment tree**) where comments id are used as keys.
+Backend transfers 2 objects 
+`items` (**list of comments**)<br>
+`mapItems` (**describes the hierarchy of the comment tree**)<br>
+Where comments id are used as keys.
 
 #### items
-```
+```js
   {
     1549 : {
       dateCreate: 1632329876,
@@ -105,7 +108,7 @@ The server will be available at: http://localhost:8080/
 
 
 #### mapItems
-```
+```js
   {
     1549 : {items: [1550], quantity: 1},
     1550 : {{items: [], quantity: 0}
