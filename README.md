@@ -8,7 +8,7 @@
 
 For a local demonstration, you need to run 2 servers, the server from which you will receive data, and the server that will display the page
 
-#### Server data api 
+### Server Back-End
 
 **Download repository**
 ```bash
@@ -27,7 +27,7 @@ npm run dev
 
 The server will be available at: http://localhost:8888/
 
-#### Server Front-End
+### Server Front-End
 
 **Download repository**
 ```bash
