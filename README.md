@@ -57,7 +57,7 @@ In these objects from comments are keys.
 #### items
 ```js
   {
-    1549 : {
+    1549: {
       dateCreate: 1632329876,
       dateUpdate: 1632329889,
       dislike: 0,
@@ -72,13 +72,18 @@ In these objects from comments are keys.
       userImg: "http://localhost:8888/images/users/6.jpg",
       userName: "Jhon",
     },
-    1550 : {
+    1550: {
       dateCreate: 1632329876,
       dateUpdate: 1632329889,
       dislike: 2,
       like: 0,
       voteValue: -1,
-      files: ["http://localhost:8888/images/comments/1581_0.jpg"],
+      files: [
+        {
+          name: "image 1",
+          src: "http://localhost:8888/images/comments/1581_0.jpg",
+        },
+      ],
       id: 1550,
       isManageDelete: false,
       isManageEdit: false,
@@ -86,7 +91,7 @@ In these objects from comments are keys.
       text: "text text",
       userImg: "",
       userName: "Ivan",
-    }
+    },
   }
 ```
 
@@ -97,7 +102,7 @@ In these objects from comments are keys.
 | dislike | `Number` | <= 0 | Number of dislikes |
 | like | `Number` | <= 0 | Number of likes |
 | voteValue | `Number` | 0 - **did not vote**, <br> 1 - **like**, <br> -1 - **dislike** | The current user has liked, disliked or did not vote |
-| files | `Array` | [] - **no files**,<br> ["file link 1", "file link 2"] - **there are files** | list of files |
+| files | `Array` | [] - **no files**,<br> [{ name: "Name 1", src: "file link 1" }, { name: "Name 2", src: "file link 2" }] - **there are files** | list of files |
 | id | `Number` / `String` | Number / String | Unique comment identifier |
 | isManageDelete | `Boolean` | true / false | Indicates that the current user has the right to delete the comment|
 | isManageEdit | `Boolean` | true / false | Indicates that the current user has the right to edit the comment |
@@ -110,10 +115,13 @@ In these objects from comments are keys.
 #### mapItems
 ```js
   {
-    1549 : { items: [1550], quantity: 1 },
-    1550 : { items: [], quantity: 0 }
+    0: { items: [1549], quantity: 1 },
+    1549: { items: [1550], quantity: 1 },
+    1550: { items: [], quantity: 0 },
   }
 ```
+
+**0:** - it describes the first level of comments.
 
 | Parameter | Type | Value | Description |
 | --- | :---: | --- | --- |
