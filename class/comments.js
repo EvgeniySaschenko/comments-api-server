@@ -194,7 +194,7 @@ class Comments {
 
     let createData = async (comments, quantity) => {
       for(let comment of comments) {
-
+        comment.userName = comment.userName || "User Name";
         comment.isManageEdit = comment.userId == userId;
         comment.isManageDelete = comment.userId == userId;
 
@@ -256,7 +256,7 @@ class Comments {
         cv.voteValue, 
         u.name as userName
       FROM comment as c
-      INNER JOIN user as u ON c.userId = u.id
+      LEFT JOIN user as u ON c.userId = u.id
       LEFT JOIN comment_vote as cv ON c.id = cv.commentId AND ? = cv.userId
       WHERE c.parentId = ? ${sqlFilter}
       ORDER BY c.dateCreate ${sqlOrderByDate} LIMIT ?`);

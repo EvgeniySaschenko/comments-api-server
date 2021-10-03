@@ -3,9 +3,35 @@ let router = express.Router();
 let multer  = require('multer');
 let upload = multer({ dest: 'uploads/' });
 let Comments = require(__APPROOT + '/class/comments');
+let User = require(__APPROOT + '/class/user');
 
+// Для хероку - пототому что он удалят данные
+router.use(async (req, res, next)=>{
+  let user = new User();
+  let { name } = JSON.parse(req.cookies.user || '{}');
+  
+  if (name) {
+    let result = await user.getUserByName(name);
 
-// Добавить комментарий
+    if (result) {
+      next();
+    } else {
+      try {
+        let result = await user.addUser({name, avatar: false});
+        res.setHeader('Set-Cookie', `user=${JSON.stringify(result)};path=/;maxAge=${60*60*24*365}`);
+        req.cookies.user.id = result.id;
+        next();
+      } catch (error) {
+        console.log(error);
+        res.status(500).send();
+      }
+    }
+  } else {
+    next();
+  }
+});
+
+// Получить список комментариев
 router.get('/', async (req, res, next)=> {
   let comments = new Comments();
   let { id: userId } = JSON.parse(req.cookies.user || '{}');
