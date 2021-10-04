@@ -128,3 +128,21 @@ In these objects from comments are keys.
 | items | `Array` | [] | This field contains the ID of comments that are direct descendants, only those IDs whose comments are passed in this request to the client are indicated here. Comments will be displayed in the same order as specified in the array. |
 | quantity | `Number` | Number | The total number of comments for this ancestor. |
 
+## Url
+
+| Url | Type query | Description |
+| --- | :---: | --- |
+| `/api/comments/?parentId=0` | GET | Get list comments. |
+| `/api/comments/?parentId=0&firstId=1813&lastId=1793&insertTo=after&newCommentsIds=1811,1812` | GET | Get a list of comments, by clicking on the button "show more" |
+| `/api/comments/` | POST | Add comment |
+| `/api/comments/` | PUT | Edit comment |
+| `/api/comments/` | DELETE | Delete comment |
+| `/api/comments/vote/` | POST | Add like / dislike |
+
+
+**Query params**
+`parentId` - ancestor id for which we need to get a list of comments <br>
+`firstId` - ID of the first comment in the list <br>
+`lastId` - ID of the last comment in the list <br>
+`insertTo` - **after** / **before** indicates that the comment will be inserted comments (beginning or end of the list) <br>
+`newCommentsIds` - this ancestor's comments added by the current user <br>
