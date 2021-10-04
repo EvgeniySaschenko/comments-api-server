@@ -140,7 +140,7 @@ In these objects from comments are keys.
 | `/api/comments/vote/` | POST | Add like / dislike |
 
 
-**Query params**
+**Query params**<br>
 `parentId` - ancestor id for which we need to get a list of comments <br>
 `firstId` - ID of the first comment in the list <br>
 `lastId` - ID of the last comment in the list <br>
