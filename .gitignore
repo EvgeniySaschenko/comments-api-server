@@ -1,7 +1,7 @@
 node_modules
-# public/images/comments
+public/images/comments
 !public/images/comments/.gitkeep
-# public/images/users
+public/images/users
 !public/images/users/.gitkeep
 uploads
 !uploads/.gitkeep
