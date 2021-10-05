@@ -8,9 +8,18 @@ let User = require(__APPROOT + '/class/user');
 // Для хероку - пототому что он удалят данные
 router.use(async (req, res, next)=>{
   let user = new User();
-  let { name } = JSON.parse(req.cookies.user || '{}');
-  
-  if (name) {
+  let { createUser } = req.query;
+  let name;
+  if (req.cookies.user) {
+    let userData = JSON.parse(req.cookies.user || '{}');
+    name = userData.name;
+  }
+
+  if (name || createUser == 1) {
+
+    if (!name && createUser == 1) {
+      name = 'user' + parseInt(Date.now() / 1000);
+    }
     let result = await user.getUserByName(name);
 
     if (result) {
@@ -19,7 +28,10 @@ router.use(async (req, res, next)=>{
       try {
         let result = await user.addUser({name, avatar: false});
         res.setHeader('Set-Cookie', `user=${JSON.stringify(result)};path=/;maxAge=${60*60*24*365}`);
-        req.cookies.user.id = result.id;
+        if (req.cookies.user) {
+          req.cookies.user.id = result.id;
+        }
+
         next();
       } catch (error) {
         console.log(error);

@@ -133,7 +133,7 @@ In these objects from comments are keys.
 
 | Url | Type query | Description |
 | --- | :---: | --- |
-| `/api/comments/?parentId=0` | GET | Get list comments. |
+| `/api/comments/?parentId=0&createUser=1` | GET | Get list comments. |
 | `/api/comments/?parentId=0&firstId=1813&lastId=1793&insertTo=after&newCommentsIds=1811,1812` | GET | Get a list of comments, by clicking on the button "show more" |
 | `/api/comments/` | POST | Add comment |
 | `/api/comments/` | PUT | Edit comment |
@@ -142,6 +142,7 @@ In these objects from comments are keys.
 
 
 **Query params**<br>
+`createUser` - the parameter indicates that the server should automatically create a user (this may be needed for the test, when you do not have a registration form) <br>
 `parentId` - ancestor id for which we need to get a list of comments <br>
 `firstId` - ID of the first comment in the list <br>
 `lastId` - ID of the last comment in the list <br>
