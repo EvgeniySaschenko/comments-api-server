@@ -1,7 +1,17 @@
 let db = require(__APPROOT + '/ext/db');
 let fsExtra = require('fs-extra');
 let striptags = require('striptags');
+let sharp = require('sharp');
 let config = require(__APPROOT + '/env.config');
+
+let imgExtentions = {
+  "gif": true,
+  "jpeg": true,
+  "jpg": true,
+  "png": true,
+  "webp": true,
+  "svg": true
+};
 
 class Comments {
   constructor() {
@@ -117,12 +127,32 @@ class Comments {
   // Копировать файлы
   async copuFiles(files, commentId, startNameNum = 0) {
     for (let i = 0; i < files.length; i++) {
+      let extention = this.getFileExtention(files[i].originalname);
       let src = `${__APPROOT}/${files[i].path}`;
-      let dist = `${__APPROOT}/public/images/comments/${commentId}_${startNameNum}.${this.getFileExtention(files[i].originalname)}`;
+      let dist = `${__APPROOT}/public/images/comments/${commentId}_${startNameNum}.${extention}`;
+      let distPreview = `${__APPROOT}/public/images/comments/preview/${commentId}_${startNameNum}.${extention}`;
+      if (imgExtentions[extention]) {
+        await this.createPreviewImg(src, distPreview);
+      }
       startNameNum++;
+
       await fsExtra.copy(src, dist);
     }
   }
+  // Создать превью
+  async createPreviewImg(src, dist) {
+    let file = await new Promise((resolve, reject)=>{
+      sharp(src)
+      .resize(400)
+      .jpeg({ mozjpeg: true })
+      .toFile(dist, (error, result) => {
+        if (error) return reject({error: this.message.serverError });
+        resolve(result);
+       });
+    });
+    return file;
+  }
+
   // Расшырение файла
   getFileExtention(fileName) {
     return fileName.match(/[^.]+$/i)[0];
@@ -149,6 +179,7 @@ class Comments {
     files = (typeof files == 'string' ? JSON.parse(files) : files).map((file)=>{
       return {
         src: `${config.baseUrlImg}/comments/${id}_${file.partName}`,
+        preview: `${config.baseUrlImg}/comments/preview/${id}_${file.partName}`,
         name: file.name
       };
     });

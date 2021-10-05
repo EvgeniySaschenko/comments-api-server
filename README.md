@@ -82,6 +82,7 @@ In these objects from comments are keys.
         {
           name: "image 1",
           src: "http://localhost:8888/images/comments/1581_0.jpg",
+          preview: "http://localhost:8888/images/comments/preview/1581_0.jpg",
         },
       ],
       id: 1550,
@@ -102,7 +103,7 @@ In these objects from comments are keys.
 | dislike | `Number` | <= 0 | Number of dislikes |
 | like | `Number` | <= 0 | Number of likes |
 | voteValue | `Number` | 0 - **did not vote**, <br> 1 - **like**, <br> -1 - **dislike** | The current user has liked, disliked or did not vote |
-| files | `Array` | [] - **no files**,<br> [{ name: "Name 1", src: "file link 1" }, { name: "Name 2", src: "file link 2" }] - **there are files** | list of files |
+| files | `Array` | [] - **no files**,<br> [{ name: "Name 1", src: "file link 1", preview: "preview link 1" }, { name: "Name 2", src: "file link 2", preview: "preview link 2" }] - **there are files** | list of files |
 | id | `Number` / `String` | Number / String | Unique comment identifier |
 | isManageDelete | `Boolean` | true / false | Indicates that the current user has the right to delete the comment|
 | isManageEdit | `Boolean` | true / false | Indicates that the current user has the right to edit the comment |
