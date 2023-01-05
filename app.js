@@ -1,7 +1,8 @@
-global.__APPROOT= require('app-root-path');
+let path = require('path');
+
+global.__APPROOT= path.join(__dirname, '');
 let createError = require('http-errors');
 let express = require('express');
-let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let app = express();
