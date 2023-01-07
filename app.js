@@ -14,8 +14,8 @@ app.use(cors());
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views/dist'));
+// app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,6 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use('/', express.static(path.join(__dirname, 'public/dist')));
+app.get('/', (req, res)=>{
+  res.sendFile(path.join(__dirname, 'public/dist/index.html'));
+});
 
 app.use('/api/comments', require('./api/comments'));
 app.use('/api/user', require('./api/user'));
