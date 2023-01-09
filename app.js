@@ -12,7 +12,7 @@ let process = require('process');
 
 app.use(cors());
 
-
+// test
 // view engine setup
 // app.set('views', path.join(__dirname, 'views/dist'));
 // app.set('view engine', 'html');
