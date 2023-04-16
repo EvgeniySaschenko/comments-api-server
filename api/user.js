@@ -10,6 +10,7 @@ router.post('/', upload.array('avatar'), async (req, res, next)=> {
   let { name } = req.body;
 
   if (name) {
+    name = JSON.stringify(name);
     user.addUser({name, avatar: req.files[0]})
     .then((result) => {
       res.setHeader('Set-Cookie', `user=${JSON.stringify(result)};path=/;maxAge=${60*60*24*365}`);
