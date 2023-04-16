@@ -6,10 +6,10 @@ let config = require(__APPROOT + '/env.config');
 class User {
   constructor() {
     this.message = {
-      serverError: "Ошибка сервера",
-      userNoAdd: "Ошибка сервера, пользльзователь не добавлен",
-      userExist: "Пользователь с таким именем уже существует",
-      avatarNoAdd: "Ошибка, аватар пользователя не загружен",
+      serverError: "Server error",
+      userNoAdd: "Server error, user not added",
+      userExist: "A user with the same name already exists",
+      avatarNoAdd: "Error, user avatar not loaded",
     }
   }
   // Получить пользователя по имени

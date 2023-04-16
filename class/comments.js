@@ -17,10 +17,10 @@ class Comments {
   constructor() {
     this.countFileCopy = 0;
     this.message = {
-      commentNoAdd: "Ошибка сервера, комментрарий не добавлен",
-      serverError: "Ошибка  на сервере",
-      commentNoDelelete: "Ошибка комментарий не удалён",
-      commentNoUpdate: "Ошибка комментарий не обновлён",
+      commentNoAdd: "Server error, comment not added",
+      serverError: "Error on the server",
+      commentNoDelelete: "Error comment not deleted",
+      commentNoUpdate: "Error comment not updated",
     }
   }
   // Добавить комментарий в БД
