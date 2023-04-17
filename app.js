@@ -9,19 +9,44 @@ let app = express();
 let cors = require('cors');
 let os = require('os');
 let process = require('process');
+let InitDb = require('./class/init-db');
+let pm2 = require('pm2');
+
+
 
 app.use(cors());
-
-// test2
-// view engine setup
-// app.set('views', path.join(__dirname, 'views/dist'));
-// app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+let isReadyApp = false;
+
+let runInitDb = async () => {
+  isReadyApp = false;
+  let initDb =  new InitDb();
+  await initDb.init();
+  isReadyApp = true;
+}
+
+runInitDb();
+
+// Restart app
+let timeRestart = 20000;
+setInterval( ()=>{
+  pm2.restart('www');
+}, timeRestart)
+
+app.use(async (req, res, next)=>{
+  if(isReadyApp) {
+    next();
+  } else {
+    res.send({error: 'Server is updated'})
+  }
+});
+
 
 
 app.use('/', express.static(path.join(__dirname, 'public/dist')));
