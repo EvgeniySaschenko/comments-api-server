@@ -34,8 +34,8 @@ router.use(async (req, res, next)=>{
 
         next();
       } catch (error) {
-        console.log(error);
-        res.status(500).send();
+        console.error(error);
+        res.send(error);
       }
     }
   } else {
@@ -56,12 +56,11 @@ router.get('/', async (req, res, next)=> {
     lastId: parseInt(lastId), 
     insertTo
   }).then((rerust)=>{ 
-    if (!rerust.error) {
-      res.send(rerust);
-    } else {
-      res.status(500).send(rerust);
-    }
-  })
+    res.send(rerust);
+  }).catch((error)=>{
+    console.error(error);
+    res.send(error);
+  });
 });
 
 // Добавить комментарий
@@ -70,13 +69,13 @@ router.post('/', upload.array('file'), async (req, res, next)=> {
   let { parentId, text } = req.body;
   let { id } = JSON.parse(req.cookies.user);
 
-  comments.addComment({ userId: id, parentId, text, files: req.files}).then((rerust)=>{ 
-    if (!rerust.error) {
+  comments.addComment({ userId: id, parentId, text, files: req.files})
+    .then((rerust)=>{ 
       res.send(rerust);
-    } else {
-      res.status(500).send(rerust);
-    }
-  })
+    }).catch((error)=>{
+      console.error(error);
+      res.send(error);
+    });
 });
 
 // Редактировать комментарий
@@ -85,26 +84,26 @@ router.put('/', upload.array('file'), async (req, res, next)=> {
   let { commentId, uploadedFiles, text } = req.body;
   let { id } = JSON.parse(req.cookies.user || '{}');
 
-  comments.updateComment({commentId, userId: id, text, uploadedFiles, files: req.files}).then((rerust)=>{
-    if (!rerust.error) {
-      res.send(rerust);
-    } else {
-      res.status(500).send(rerust);
-    }
-  })
+  comments.updateComment({commentId, userId: id, text, uploadedFiles, files: req.files})
+  .then((rerust)=>{ 
+    res.send(rerust);
+  }).catch((error)=>{
+    console.error(error);
+    res.send(error);
+  });
 });
 
 // Удалить комментарий
 router.delete('/', upload.array('file'), async (req, res, next)=> {
   let comments = new Comments();
   let { commentId } = req.body;
-  comments.deleteComment(commentId).then((rerust)=>{ 
-    if (!rerust.error) {
-      res.send(rerust);
-    } else {
-      res.status(500).send(rerust);
-    }
-  })
+  comments.deleteComment(commentId)
+  .then((rerust)=>{ 
+    res.send(rerust);
+  }).catch((error)=>{
+    console.error(error);
+    res.send(error);
+  });
 });
 
 // Добавить / убрать лайк
@@ -115,12 +114,11 @@ router.post('/vote/', upload.none(), async (req, res, next)=> {
 
   comments.processVote({userId: id, commentId, voteValue})
   .then((rerust)=>{ 
-    if (!rerust.error) {
-      res.send(rerust);
-    } else {
-      res.status(500).send(rerust);
-    }
-  })
+    res.send(rerust);
+  }).catch((error)=>{
+    console.error(error);
+    res.send(error);
+  });
 });
 
 module.exports = router;

@@ -25,39 +25,33 @@ class User {
   }
   // Добавить пользователя
   async addUser({name = '', avatar}) {
-    try {
-      name = striptags(name);
-      let checkUser = await this.getUserByName(name);
-      let user;
-      if (checkUser) return { error: this.message.userExist };
+    name = striptags(name);
 
-      let curentDate = parseInt(Date.now() / 1000);
-      let smtp = db.prepare("INSERT INTO user (name, dateCreate) VALUES (?,?)");
-      user = await new Promise((resolve, reject) => {
-        smtp.run(name, curentDate, (error, result) => {
-          if (error) reject({ error: this.message.userNoAdd });
-          let id = smtp.lastID;
-          smtp.finalize();
-          resolve({id, name});
-        });
+    let checkUser = await this.getUserByName(name);
+    let user;
+    if (checkUser) throw { error: this.message.userExist };
+
+    let curentDate = parseInt(Date.now() / 1000);
+    let smtp = db.prepare("INSERT INTO user (name, dateCreate) VALUES (?,?)");
+    user = await new Promise((resolve, reject) => {
+      smtp.run(name, curentDate, (error, result) => {
+        if (error) reject({ error: this.message.userNoAdd });
+        let id = smtp.lastID;
+        smtp.finalize();
+        resolve({id, name});
       });
+    });
 
-      if (avatar) {
-        let partUrl = `users/${user.id}.jpg`;
-        let src = `${__APPROOT}/${avatar.path}`;
-        let dist = `${__APPROOT}/public/images/${partUrl}`;
-        await this.copuFile(src, dist)
-          .then(()=> {
-            user.img = `${config.baseUrlImg}/${partUrl}`;
-          }).catch((error)=>{
-            user.error = error.error;
-          });
-      }
-      return user;
-    } catch(error) {
-      console.log(error);
-      return error;
+    if (avatar) {
+      let partUrl = `users/${user.id}.jpg`;
+      let src = `${__APPROOT}/${avatar.path}`;
+      let dist = `${__APPROOT}/public/images/${partUrl}`;
+      await this.copuFile(src, dist)
+        .then(()=> {
+          user.img = `${config.baseUrlImg}/${partUrl}`;
+        });
     }
+    return user;
   }
   // Копировать файлы
   async copuFile(src, dist) {

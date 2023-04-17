@@ -9,20 +9,16 @@ router.post('/', upload.array('avatar'), async (req, res, next)=> {
   let user = new User();
   let { name } = req.body;
 
-  if (name) {
-    name = JSON.stringify(name);
-    user.addUser({name, avatar: req.files[0]})
-    .then((result) => {
-      res.setHeader('Set-Cookie', `user=${JSON.stringify(result)};path=/;maxAge=${60*60*24*365}`);
+  user.addUser({name, avatar: req.files[0]})
+  .then((result) => {
+    res.setHeader('Set-Cookie', `user=${JSON.stringify(result)};path=/;maxAge=${60*60*24*365}`);
 
-      res.send(result);
-    })
-    .catch((error)=>{
-      res.send(error);
-    });
-  } else {
-    res.status(500);
-  }
+    res.send(result);
+  })
+  .catch((error)=>{
+    console.log(error);
+    res.send(error);
+  });
 });
 
 module.exports = router;
