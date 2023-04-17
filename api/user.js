@@ -16,7 +16,7 @@ router.post('/', upload.array('avatar'), async (req, res, next)=> {
     res.send(result);
   })
   .catch((error)=>{
-    console.log(error);
+    console.error(error);
     res.send(error);
   });
 });

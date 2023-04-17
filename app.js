@@ -10,7 +10,6 @@ let cors = require('cors');
 let os = require('os');
 let process = require('process');
 let InitDb = require('./class/init-db');
-let pm2 = require('pm2');
 
 
 
@@ -32,12 +31,6 @@ let runInitDb = async () => {
 }
 
 runInitDb();
-
-// Restart app
-let timeRestart = 20000;
-setInterval( ()=>{
-  pm2.restart('www');
-}, timeRestart)
 
 app.use(async (req, res, next)=>{
   if(isReadyApp) {
@@ -75,7 +68,7 @@ app.use(function(err, req, res, next) {
 
 
 process.on('uncaughtException', (err, origin) => {
-  console.log(err)
+  console.error(err)
 });
 
 module.exports = app;

@@ -17,8 +17,10 @@ class InitDb {
       let stmt = dbPersistent.prepare(`SELECT * FROM ${table}`);
       let data = await new Promise((resolve, reject) => {
         stmt.all((error, result)=>{
-          console.error(error);
-          if (error) reject({ error });
+          if (error) {
+            console.error(error);
+            reject({ error });
+          }
           resolve(result);
         });
       });
@@ -56,22 +58,28 @@ class InitDb {
 
     await new Promise((resolve, reject) => {
       user.run((error, result)=>{
-        console.error(error);
-        if (error) reject({ error });
+        if (error) {
+          console.error(error);
+          reject({ error });
+        }
         resolve(result);
       });
     });
     await new Promise((resolve, reject) => {
       comment.run((error, result)=>{
-        console.error(error);
-        if (error) reject({ error });
+        if (error) {
+          console.error(error);
+          reject({ error });
+        }
         resolve(result);
       });
     });
     await new Promise((resolve, reject) => {
       comment_vote.run((error, result)=>{
-        console.error(error);
-        if (error) reject({ error });
+        if (error) {
+          console.error(error);
+          reject({ error });
+        }
         resolve(result);
       });
     });
@@ -83,8 +91,10 @@ class InitDb {
   //       let stmt = dbMemory.prepare(`DROP TABLE IF EXISTS ${table}`);
   //       await new Promise((resolve, reject) => {
   //         stmt.run((error, result)=>{
-  //           console.error(error);
-  //           if (error) reject({ error });
+              // if (error) {
+              //   console.error(error);
+              //   reject({ error });
+              // }
   //           resolve(result);
   //         });
   //       });
@@ -117,8 +127,10 @@ class InitDb {
         let stmt = dbMemory.prepare(`INSERT INTO ${tableName} (${keys}) VALUES (${valuesPoint})`, ...values);
         await new Promise((resolve, reject) => {
           stmt.run((error, result)=>{
-            console.error(error);
-            if (error) reject({ error });
+            if (error) {
+              console.error(error);
+              reject({ error });
+            }
             resolve(result);
           });
         });
