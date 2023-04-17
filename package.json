@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
-    "start": "cross-env NODE_ENV=production pm2 restart ./bin/www",
-    "stop": "pm2 stop all"
+    "start": "cross-env NODE_ENV=production node ./bin/www"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
@@ -23,7 +22,6 @@
     "morgan": "~1.9.1",
     "multer": "^1.4.3",
     "os": "^0.1.2",
-    "pm2": "^5.3.0",
     "sharp": "^0.29.0",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2",
