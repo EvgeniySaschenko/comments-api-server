@@ -44,7 +44,7 @@ router.use(async (req, res, next)=>{
 });
 
 // Получить список комментариев
-router.get('/', async (req, res, next)=> {
+router.get('/', (req, res, next)=> {
   let comments = new Comments();
   let { id: userId } = JSON.parse(req.cookies.user || '{}');
   let { parentId = 0, firstId, lastId, insertTo } = req.query;
