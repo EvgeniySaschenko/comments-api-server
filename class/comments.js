@@ -1,4 +1,4 @@
-let { dbMemory } = require(__APPROOT + '/ext/db');
+let { dbPersistent } = require(__APPROOT + '/ext/db');
 let fsExtra = require('fs-extra');
 let striptags = require('striptags');
 let sharp = require('sharp');
@@ -29,7 +29,7 @@ class Comments {
     let filesInfo = this.preparationFilesInfo(files);
     let comment;
     let dateCreate = parseInt(Date.now() / 1000);
-    let smtp = dbMemory.prepare("INSERT INTO comment (userId, parentId, text, files, dateCreate) VALUES (?,?,?,?,?)");
+    let smtp = dbPersistent.prepare("INSERT INTO comment (userId, parentId, text, files, dateCreate) VALUES (?,?,?,?,?)");
 
 
     // Добаляем запись в БД
@@ -56,7 +56,7 @@ class Comments {
   }
   // Удалить комментарий
   async deleteComment(commentId) {
-    let smtp = dbMemory.prepare("DELETE FROM comment WHERE id = ?");
+    let smtp = dbPersistent.prepare("DELETE FROM comment WHERE id = ?");
     let result = await new Promise((resolve, reject)=>{
       smtp.run(commentId, (error) => {
         if (error) reject({ error: this.message.commentNoDelelete });
@@ -79,7 +79,7 @@ class Comments {
       let startNumFiles = uploadedFiles.length ? uploadedFiles.length : 0;
       await this.copuFiles(files, commentId, startNumFiles);
 
-      let smtp = dbMemory.prepare("UPDATE comment SET userIdEdit = ?, text = ?, files = ?, dateUpdate = ? WHERE id = ?");
+      let smtp = dbPersistent.prepare("UPDATE comment SET userIdEdit = ?, text = ?, files = ?, dateUpdate = ? WHERE id = ?");
 
       await new Promise((resolve, reject) => {
         let files = JSON.stringify(filesInfo.items);
@@ -106,7 +106,7 @@ class Comments {
   }
   // Редактировать комментарий
   async updateCommentVote({ commentId, like, dislike }) {
-    let smtp = dbMemory.prepare("UPDATE comment SET like = ?, dislike = ? WHERE id = ?");
+    let smtp = dbPersistent.prepare("UPDATE comment SET like = ?, dislike = ? WHERE id = ?");
 
     let result = await new Promise((resolve, reject) => {
       smtp.run(like, dislike , commentId, (error) => {
@@ -281,7 +281,7 @@ class Comments {
       }
     }
 
-    let stmt = dbMemory.prepare(`
+    let stmt = dbPersistent.prepare(`
       SELECT 
         c.*, 
         cv.voteValue, 
@@ -303,7 +303,7 @@ class Comments {
   }
   // Получить количество записей по parentId
   async getCommentsQuantityByParentId(parentId) {
-    let stmt = dbMemory.prepare("SELECT COUNT(id) as quantity FROM comment WHERE parentId = ?");
+    let stmt = dbPersistent.prepare("SELECT COUNT(id) as quantity FROM comment WHERE parentId = ?");
     let result = await new Promise((resolve, reject) => {
       stmt.get(parentId, (error, result)=>{
         stmt.finalize();
@@ -317,7 +317,7 @@ class Comments {
 
   // Получить комментарий по ID
   async getCommentById(commentId) {
-    let stmt = dbMemory.prepare("SELECT * FROM comment WHERE id = ?");
+    let stmt = dbPersistent.prepare("SELECT * FROM comment WHERE id = ?");
     let result = await new Promise((resolve, reject) => {
       stmt.get(commentId, (error, result)=>{
         if (error) reject({ error: this.message.serverError });
@@ -328,7 +328,7 @@ class Comments {
   }
   // Получить голос пользователя 
   async getVoteUser(commentId, userId) {
-    let stmt = dbMemory.prepare("SELECT * FROM comment_vote WHERE commentId = ? AND userId = ?");
+    let stmt = dbPersistent.prepare("SELECT * FROM comment_vote WHERE commentId = ? AND userId = ?");
     let result = await new Promise((resolve, reject) => {
       stmt.get(commentId, userId, (error, result)=>{
         if (error) reject({ error: this.message.serverError });
@@ -375,7 +375,7 @@ class Comments {
   // Добавить лайк
   async addVote({commentId, userId, voteValue}) {
     let curentDate = parseInt(Date.now() / 1000);
-    let smtp = dbMemory.prepare("INSERT INTO comment_vote (userId, commentId, voteValue, dateCreate) VALUES (?,?,?,?)");
+    let smtp = dbPersistent.prepare("INSERT INTO comment_vote (userId, commentId, voteValue, dateCreate) VALUES (?,?,?,?)");
     let result = await new Promise((resolve, reject) => {
       smtp.run(userId, commentId, voteValue, curentDate, (error) => {
         if (error) reject({ error: this.message.serverError });
@@ -388,7 +388,7 @@ class Comments {
   }
   // Удалить лайк
   async deleteVote(voteId) {
-    let smtp = dbMemory.prepare("DELETE FROM comment_vote WHERE id = ?");
+    let smtp = dbPersistent.prepare("DELETE FROM comment_vote WHERE id = ?");
     let result = await new Promise((resolve, reject)=>{
       smtp.run(voteId, (error) => {
         if (error) reject({ error: this.message.commentNoDelelete });
@@ -401,7 +401,7 @@ class Comments {
   // Редактировать лайк
   async updateVote({voteId, voteValue}) {
     let curentDate = parseInt(Date.now() / 1000);
-    let smtp = dbMemory.prepare("UPDATE comment_vote SET voteValue = ?, dateUpdate = ? WHERE id = ?");
+    let smtp = dbPersistent.prepare("UPDATE comment_vote SET voteValue = ?, dateUpdate = ? WHERE id = ?");
     let result = await new Promise((resolve, reject) => {
       smtp.run(voteValue, curentDate, voteId, (error) => {
         if (error) reject({ error: this.message.serverError });

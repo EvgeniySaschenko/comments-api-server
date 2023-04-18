@@ -12,6 +12,9 @@ let process = require('process');
 let InitDb = require('./class/init-db');
 
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 app.use(cors());
 
@@ -21,24 +24,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-let isReadyApp = false;
+// for memory db
 
-let runInitDb = async () => {
-  isReadyApp = false;
-  let initDb =  new InitDb();
-  await initDb.init();
-  isReadyApp = true;
-}
+// let isReadyApp = false;
 
-runInitDb();
+// let runInitDb = async () => {
+//   isReadyApp = false;
+//   let initDb =  new InitDb();
+//   await initDb.init();
+//   isReadyApp = true;
+// }
 
-app.use(async (req, res, next)=>{
-  if(isReadyApp) {
-    next();
-  } else {
-    res.send({error: 'Server is updated'})
-  }
-});
+// runInitDb();
+
+// app.use(async (req, res, next)=>{
+//   if(isReadyApp) {
+//     next();
+//   } else {
+//     res.send({error: 'Server is updated'})
+//   }
+// });
 
 
 

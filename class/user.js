@@ -1,4 +1,4 @@
-let { dbMemory } = require(__APPROOT + '/ext/db');
+let { dbPersistent } = require(__APPROOT + '/ext/db');
 let sharp = require('sharp');
 let striptags = require('striptags');
 let config = require(__APPROOT + '/env.config');
@@ -14,7 +14,7 @@ class User {
   }
   // Получить пользователя по имени
   async getUserByName(name = '') {
-    let stmt = dbMemory.prepare("SELECT * FROM user WHERE name = ?");
+    let stmt = dbPersistent.prepare("SELECT * FROM user WHERE name = ?");
     let result = await new Promise((resolve, reject) => {
       stmt.get(name, (error, result)=>{
         if (error) reject({ error: this.message.serverError });
@@ -32,7 +32,7 @@ class User {
     if (checkUser) throw { error: this.message.userExist };
 
     let curentDate = parseInt(Date.now() / 1000);
-    let smtp = dbMemory.prepare("INSERT INTO user (name, dateCreate) VALUES (?,?)");
+    let smtp = dbPersistent.prepare("INSERT INTO user (name, dateCreate) VALUES (?,?)");
     user = await new Promise((resolve, reject) => {
       smtp.run(name, curentDate, (error, result) => {
         if (error) reject({ error: this.message.userNoAdd });
