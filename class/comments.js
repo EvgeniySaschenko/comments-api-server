@@ -126,7 +126,9 @@ class Comments {
       let src = `${__APPROOT}/${files[i].path}`;
       let dist = `${__APPROOT}/public/images/comments/${commentId}_${startNameNum}.${extention}`;
       let distPreview = `${__APPROOT}/public/images/comments/preview/${commentId}_${startNameNum}.${extention}`;
-      if (imgExtentions[extention]) {
+      if(extention === 'svg') {
+        await fsExtra.copy(src, distPreview);
+      } else if (imgExtentions[extention]) {
         await this.createPreviewImg(src, distPreview);
       }
       startNameNum++;
