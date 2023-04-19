@@ -51,7 +51,7 @@ class Comments {
       console.error(error);
       await this.deleteComment(comment.id);
       await this.deleteFiles(files, comment.id);
-      return { error: this.message.serverError };
+      throw { error: this.message.serverError };
     }
   }
   // Удалить комментарий
@@ -71,38 +71,33 @@ class Comments {
   }
   // Редактировать комментарий
   async updateComment({ userId, commentId, text, uploadedFiles, files}) {
-    try {
-      text = this.preparationText(text);
-      uploadedFiles = JSON.parse(uploadedFiles);
-      let filesInfo = this.preparationFilesInfoUpdate(files, uploadedFiles);
-      let dateUpdate = parseInt(Date.now() / 1000);
-      let startNumFiles = uploadedFiles.length ? uploadedFiles.length : 0;
-      await this.copuFiles(files, commentId, startNumFiles);
+    text = this.preparationText(text);
+    uploadedFiles = JSON.parse(uploadedFiles);
+    let filesInfo = this.preparationFilesInfoUpdate(files, uploadedFiles);
+    let dateUpdate = parseInt(Date.now() / 1000);
+    let startNumFiles = uploadedFiles.length ? uploadedFiles.length : 0;
+    await this.copuFiles(files, commentId, startNumFiles);
 
-      let smtp = dbPersistent.prepare("UPDATE comment SET userIdEdit = ?, text = ?, files = ?, dateUpdate = ? WHERE id = ?");
+    let smtp = dbPersistent.prepare("UPDATE comment SET userIdEdit = ?, text = ?, files = ?, dateUpdate = ? WHERE id = ?");
 
-      await new Promise((resolve, reject) => {
-        let files = JSON.stringify(filesInfo.items);
-        smtp.run(userId, text, files, dateUpdate, commentId, (error) => {
-          if (error) reject({ error: this.message.commentNoUpdate });
-          smtp.finalize();
-          resolve();
-        });
+    await new Promise((resolve, reject) => {
+      let files = JSON.stringify(filesInfo.items);
+      smtp.run(userId, text, files, dateUpdate, commentId, (error) => {
+        if (error) reject({ error: this.message.commentNoUpdate });
+        smtp.finalize();
+        resolve();
       });
+    });
 
-      // delete files
+    // delete files
 
-      return this.createResponse({ 
-        id: commentId, 
-        text, 
-        files: filesInfo.items, 
-        dateUpdate, 
-        isEditedComment: true 
-      });
-    } catch(error) {
-      console.error(error);
-      return { error: this.message.serverError };
-    }
+    return this.createResponse({ 
+      id: commentId, 
+      text, 
+      files: filesInfo.items, 
+      dateUpdate, 
+      isEditedComment: true 
+    });
   }
   // Редактировать комментарий
   async updateCommentVote({ commentId, like, dislike }) {
@@ -361,15 +356,11 @@ class Comments {
       }
     }
     // Обновляем количество лайков для комментрия
-    try {
-      await this.updateCommentVote({ 
-        commentId, 
-        like: like >= 0 ? like : 0, 
-        dislike: dislike >= 0 ? dislike : 0, 
-      });
-    } catch(error) {
-      console.error(error);
-    }
+    await this.updateCommentVote({ 
+      commentId, 
+      like: like >= 0 ? like : 0, 
+      dislike: dislike >= 0 ? dislike : 0, 
+    });
     return result;
   }
   // Добавить лайк

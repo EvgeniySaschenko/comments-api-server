@@ -35,7 +35,7 @@ router.use(async (req, res, next)=>{
         next();
       } catch (error) {
         console.error(error);
-        res.send(error);
+        res.status(500).send(error);
       }
     }
   } else {
@@ -59,7 +59,7 @@ router.get('/', (req, res, next)=> {
     res.send(rerust);
   }).catch((error)=>{
     console.error(error);
-    res.send(error);
+    res.status(500).send(error);
   });
 });
 
@@ -74,7 +74,7 @@ router.post('/', upload.array('file'), async (req, res, next)=> {
       res.send(rerust);
     }).catch((error)=>{
       console.error(error);
-      res.send(error);
+      res.status(500).send(error);
     });
 });
 
@@ -89,7 +89,7 @@ router.put('/', upload.array('file'), async (req, res, next)=> {
     res.send(rerust);
   }).catch((error)=>{
     console.error(error);
-    res.send(error);
+    res.status(500).send(error);
   });
 });
 
@@ -102,7 +102,7 @@ router.delete('/', upload.array('file'), async (req, res, next)=> {
     res.send(rerust);
   }).catch((error)=>{
     console.error(error);
-    res.send(error);
+    res.status(500).send(error);
   });
 });
 
@@ -117,7 +117,7 @@ router.post('/vote/', upload.none(), async (req, res, next)=> {
     res.send(rerust);
   }).catch((error)=>{
     console.error(error);
-    res.send(error);
+    res.status(500).send(error);
   });
 });
 
