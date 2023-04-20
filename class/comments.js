@@ -384,7 +384,7 @@ class Comments {
     let smtp = dbPersistent.prepare("DELETE FROM comment_vote WHERE id = ?");
     let result = await new Promise((resolve, reject)=>{
       smtp.run(voteId, (error) => {
-        if (error) reject({ error: this.message.commentNoDelelete });
+        if (error) reject({ error: this.message.serverError });
         smtp.finalize();
         resolve({ voteValue: 0});
       });
