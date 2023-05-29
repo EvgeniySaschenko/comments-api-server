@@ -25,6 +25,11 @@ npm install
 npm run dev
 ```
 
+##### Docker
+```bash
+docker compose start / up / stop
+```
+
 The server will be available at: http://localhost:8888/
 
 #### Server Front-End

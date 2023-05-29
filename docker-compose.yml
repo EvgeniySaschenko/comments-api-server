@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: comments-api-server
+    build: 
+      context: ./
+    # volumes:
+    #   - ./:/app
+    command: npm run start
+    stdin_open: true
+    tty: true
+    restart: on-failure
+    ports:
+      - 8888:8888
